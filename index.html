@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 40px;
+        font-family: system-ui;
+      }
+    </style>
+    <link rel="stylesheet" href="./css/app.css" />
+    <script type="module" src="./js/app.js"></script>
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Title -->
+      <h1>Premier League Shot Map</h1>
+      <p class="subtitle">2025-26 Season</p>
+      <!-- Filters -->
+      <div class="controls">
+        <select id="teamSelect"></select>
+        <select id="shotFilter">
+          <option value="all">All Shots</option>
+          <option value="goal">Goals</option>
+          <option value="block">Blocked</option>
+          <option value="miss">Misses</option>
+          <option value="save">Saved</option>
+        </select>
+      </div>
+      <!-- Stats -->
+      <div id="stats-panel"></div>
+      <!-- Legend -->
+      <div class="legend">
+        <div class="legend-item">
+          <span class="legend-color goal"></span>
+          Goal
+        </div>
+        <div class="legend-item">
+          <span class="legend-color miss"></span>
+          Miss
+        </div>
+        <div class="legend-item">
+          <span class="legend-color saved"></span>
+          Saved
+        </div>
+        <div class="legend-item">
+          <span class="legend-color blocked"></span>
+          Blocked
+        </div>
+      </div>
+      <!-- Status -->
+      <div id="status" class="status"></div>
+      <!-- Pitch -->
+      <div class="pitch-wrapper">
+        <div class="pitch-container">
+          <h3 id="home-title"></h3>
+          <h6 id="subtitle"></h6>
+          <svg id="home-pitch"></svg>
+        </div>
+        <!-- Tooltip -->
+        <div id="tooltip" class="tooltip"></div>
+      </div>
+    </div>
+    <footer class="footer">
+      Data: <a href="https://www.sofascore.com" target="_blank">SofaScore</a> | Visualization by <a href="https://jsonrbrt.github.io/index.html" target="_blank">Jason Robert</a>
+    </footer>
+  </body>
+</html>
