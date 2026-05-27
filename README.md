@@ -49,7 +49,7 @@ Sample of an entry in the JSON shot data:
 Clone the repository:
 
 ```bash
-git clone https://jsonrbrt.github.io/premier-league-shot-map/
+git clone https://github.com/jsonrbrt/premier-league-shot-map.git
 ```
 
 Navigate into the project folder:
