@@ -3,12 +3,18 @@
 This interactive dashboard visualizes all non-own-goal shots taken in the Premier League during the 2025–26 season. Users can filter by team and shot outcome to explore shooting patterns, chance quality, and finishing performance across the league.
 
 ## Live Demo
-https://yourusername.github.io/premier-league-shot-map/
+https://jsonrbrt.github.io/premier-league-shot-map/
 
 ## Screenshots
 
 ### Arsenal Shot Map
-![Arsenal Shot Map](./screenshots/arsenal-shotmap.png)
+![Arsenal Shot Map](./screenshots/arsenal_shotmap.png)
+
+### All teams Shot Map
+![All teams Shot Map](./screenshots/all_shots.png)
+
+### Filter to misses (shots off target)
+![Spurs Shot Map | Shot off target only](./screenshots/spurs_misses.png)
 
 ## Features
 
@@ -43,8 +49,38 @@ Sample of an entry in the JSON shot data:
 Clone the repository:
 
 ```bash
-pip install foobar
+git clone https://jsonrbrt.github.io/premier-league-shot-map/
 ```
+
+Navigate into the project folder:
+
+```bash
+cd shotmap
+```
+
+Run the project locally using a development server such as the VS Code Live Server extension.
+
+## Data Collection (Optional)
+
+Shot data was collected using Python and the ScraperFC package.
+
+Install dependencies:
+
+```bash
+pip install ScraperFC pandas
+```
+
+Run the scraping script:
+
+```bash
+python scripts/data.py
+```
+
+## Usage
+
+* Select a team from the dropdown menu
+* Filter shots by outcome (goals, saved, blocked, misses)
+* Hover over shots to view player, xG, minute, and outcome details
 
 ## Tech Stack
 - HTML
