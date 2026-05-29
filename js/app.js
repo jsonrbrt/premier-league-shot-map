@@ -196,6 +196,7 @@ function plotShots(shots, svg) {
 
       tooltip.innerHTML = `
     <strong>${shot.player || "Unknown"}</strong><br>
+    v ${shot.opponent}<br>
     xG: ${xg.toFixed(2)}<br>
     Minute: ${shot.minute}<br>
     Outcome: ${shot.shotType}<br>
