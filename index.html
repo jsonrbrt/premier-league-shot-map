@@ -17,6 +17,11 @@
       <p class="subtitle">2025-26 Season</p>
       <!-- Filters -->
       <div class="controls">
+        <!-- View Mode -->
+        <select id="viewMode">
+          <option value="team">Team Shot Map</option>
+          <option value="player">Player Shot Map</option>
+        </select>
         <select id="teamSelect"></select>
         <select id="shotFilter">
           <option value="all">All Shots</option>
@@ -25,6 +30,8 @@
           <option value="miss">Misses</option>
           <option value="save">Saved</option>
         </select>
+        <input id="playerSearch" list="playerOptions" type="text" placeholder="Search player..." />
+        <datalist id="playerOptions"></datalist>
       </div>
       <!-- Stats -->
       <div id="stats-panel"></div>
@@ -61,7 +68,11 @@
       </div>
     </div>
     <footer class="footer">
-      Data: <a href="https://www.sofascore.com" target="_blank">SofaScore</a> | Visualization by <a href="https://jsonrbrt.github.io/index.html" target="_blank">Jason Robert</a>
+      Data: <a href="https://www.sofascore.com" target="_blank">SofaScore</a> |
+      Visualization by
+      <a href="https://jsonrbrt.github.io/index.html" target="_blank"
+        >Jason Robert</a
+      >
     </footer>
   </body>
 </html>

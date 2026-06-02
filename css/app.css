@@ -55,6 +55,14 @@ select {
   cursor: pointer;
 }
 
+input {
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+}
+
 /* ---------- STATS ---------- */
 #stats-panel {
   display: flex;

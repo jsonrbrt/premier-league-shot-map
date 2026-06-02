@@ -1,16 +1,19 @@
 const state = {
+  viewMode: "team",
   team: "All",
   shotType: "all",
+  player: "",
 };
 
 let allShots = [];
 
+// Data loading
 async function loadData() {
   const status = document.getElementById("status");
 
   try {
     // Loading state
-    status.textContent = "Loading shot data...";
+    if (status) status.textContent = "Loading shot data...";
 
     const response = await fetch("./data/epl_shot_25_26_complete.json");
 
@@ -21,15 +24,22 @@ async function loadData() {
     allShots = await response.json();
 
     // Success
-    status.textContent = "";
+    if (status) status.textContent = "";
 
     initTeamDropdown(allShots);
+    initEventListeners();
+    initPlayerOptions(allShots);
+    // Initial visibility
+    updateControlVisibility();
+    renderTeam(allShots, state);
   } catch (err) {
     console.error(err);
 
-    status.textContent = "Failed to load shot data.";
+    if (status) status.textContent = "Failed to load shot data.";
   }
 }
+
+// Setup functions
 
 function initTeamDropdown(shots) {
   const select = document.getElementById("teamSelect");
@@ -56,33 +66,65 @@ function initTeamDropdown(shots) {
   });
 }
 
-function renderTeam(shots, state) {
-  const { team, shotType } = state;
+function initEventListeners() {
+  const viewMode = document.getElementById("viewMode");
+  const shotFilter = document.getElementById("shotFilter");
+  const playerSearch = document.getElementById("playerSearch");
 
-  let filtered = shots;
+  viewMode.addEventListener("change", (e) => {
+    state.viewMode = e.target.value;
 
-  // Team filter
-  if (team != "All") {
-    filtered = filtered.filter((s) => s.team === team);
-  }
-
-  // Shot type filter
-  let mapShots = filtered;
-  if (shotType !== "all") {
-    if (shotType === "goal") {
-      mapShots = mapShots.filter((s) => s.result === "Goal");
+    if (state.viewMode === "team") {
+      state.player = "";
+      document.getElementById("playerSearch").value = "";
     } else {
-      mapShots = mapShots.filter((s) => s.shotType === shotType);
+      state.team = "";
+      document.getElementById("teamSelect").value = "All";
     }
-  }
+    updateControlVisibility();
+    renderTeam(allShots, state);
+  });
 
-  // Stats
-  const totalShots = filtered.length;
-  const goals = filtered.filter((s) => s.result === "Goal").length;
-  const totalXg = filtered.reduce((sum, s) => sum + (s.xg || 0), 0);
-  const avgXg = totalShots > 0 ? totalXg / totalShots : 0;
-  const xgDiff = goals - totalXg;
-  const sign = xgDiff >= 0 ? "+" : "";
+  shotFilter.addEventListener("change", (e) => {
+    state.shotType = e.target.value;
+    renderTeam(allShots, state);
+  });
+
+  playerSearch.addEventListener("input", (e) => {
+    state.player = e.target.value;
+    renderTeam(allShots, state);
+  });
+}
+
+function updateControlVisibility() {
+  const teamSelect = document.getElementById("teamSelect");
+  const playerSearch = document.getElementById("playerSearch");
+
+  if (state.viewMode === "team") {
+    teamSelect.style.display = "inline-block";
+    playerSearch.style.display = "none";
+  } else {
+    teamSelect.style.display = "none";
+    playerSearch.style.display = "inline-block";
+  }
+}
+
+function initPlayerOptions(shots) {
+  const datalist = document.getElementById("playerOptions");
+
+  const players = [...new Set(shots.map((s) => s.player))].sort();
+
+  datalist.innerHTML = "";
+
+  players.forEach((player) => {
+    const option = document.createElement("option");
+    option.value = player;
+    datalist.appendChild(option);
+  });
+}
+
+function renderTeam(shots, state) {
+  const { viewMode, team, shotType, player } = state;
 
   // DOM
   const svg = document.getElementById("home-pitch");
@@ -90,8 +132,67 @@ function renderTeam(shots, state) {
   const subtitle = document.getElementById("subtitle");
   const statsPanel = document.getElementById("stats-panel");
 
+  // Stats data: team and player only
+  let statsShots = shots;
+
+  if (state.viewMode === "team") {
+    // Team filter
+    if (team != "All") {
+      statsShots = statsShots.filter((s) => s.team === team);
+    }
+  }
+
+  // Player filter
+  if (state.viewMode === "player" && player.trim() !== "") {
+    const search = player.trim().toLowerCase();
+    const exactMatches = statsShots.filter(
+      (s) => s.player.toLowerCase() === search,
+    );
+    const partialMatches = statsShots.filter((s) =>
+      s.player.toLowerCase().includes(search),
+    );
+
+    statsShots = exactMatches.length > 0 ? exactMatches : partialMatches;
+  }
+
+  console.log("viewMode:", state.viewMode);
+  console.log("player input:", player);
+  console.log("statsShots after player filter:", statsShots.length);
+  console.log(statsShots.slice(0, 5).map((s) => s.player));
+
+  // Map data: team + player + outcome
+  let mapShots = statsShots;
+
+  // Shot type filter
+  if (shotType !== "all") {
+    if (shotType === "goal") {
+      mapShots = mapShots.filter((s) => s.result === "Goal");
+    } else if (shotType === "miss") {
+      mapShots = mapShots.filter(
+        (s) => s.shotType === "miss" || s.shotType === "post",
+      );
+    } else {
+      mapShots = mapShots.filter((s) => s.shotType === shotType);
+    }
+  }
+
+  // Stats
+  const totalShots = statsShots.length;
+  const goals = statsShots.filter((s) => s.result === "Goal").length;
+  const totalXg = statsShots.reduce((sum, s) => sum + (s.xg || 0), 0);
+  const avgXg = totalShots > 0 ? totalXg / totalShots : 0;
+  const xgDiff = goals - totalXg;
+  const sign = xgDiff >= 0 ? "+" : "";
+
   // Stats panel
-  statsPanel.innerHTML = `
+  if (statsShots.length === 0) {
+    statsPanel.innerHTML = `
+    <div class="stats">
+      <span>No shots found for this selection.</span>
+    </div>
+    `;
+  } else {
+    statsPanel.innerHTML = `
   <div class="stats">
     <span><b>Shots:</b> ${totalShots}</span>
     <span><b>Goals:</b> ${goals}</span>
@@ -102,17 +203,26 @@ function renderTeam(shots, state) {
     <span><b>xG per shot:</b> ${avgXg.toFixed(2)}</span>
   </div>
     `;
+  }
 
   // Title
-  if (team === "All") {
-    title.textContent = "All Teams";
+  if (state.viewMode === "player" && player.trim() !== "") {
+    const uniquePlayers = [...new Set(statsShots.map((s) => s.player))];
+
+    if (uniquePlayers.length === 1) {
+      title.textContent = `${uniquePlayers[0]}`;
+    } else {
+      title.textContent = `${player} | ${uniquePlayers.length} matching players | 2025-26`;
+    }
+  } else if ((team === "All")) {
+    title.textContent = "All Teams | All shots in the Premier League | 2025-26";
   } else {
-    title.textContent = `${team}`;
+    title.textContent = `${team} | 2025-26`;
   }
 
   // Subtitle
   subtitle.textContent =
-    "All non own-goal shots from the 2025-26 Premier League season";
+    "All non own-goal shots, size of dots indicate xG value";
 
   // Render pitch
   svg.innerHTML = "";
@@ -120,14 +230,6 @@ function renderTeam(shots, state) {
 
   plotShots(mapShots, svg);
 }
-
-const shotFilter = document.getElementById("shotFilter");
-
-shotFilter.addEventListener("change", (e) => {
-  state.shotType = e.target.value;
-
-  renderTeam(allShots, state);
-});
 
 function plotShots(shots, svg) {
   const width = 400;

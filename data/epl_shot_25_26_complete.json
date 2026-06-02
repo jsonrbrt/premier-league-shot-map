@@ -32711,19 +32711,6 @@
     "match_id": 15129444,
     "team": "Sunderland",
     "opponent": "Burnley",
-    "player": "Axel Tuanzebe",
-    "x": 0.56,
-    "y": 0.08900000000000001,
-    "shotType": "goal",
-    "xg": 0,
-    "xgot": 0,
-    "result": "Goal",
-    "minute": 9
-  },
-  {
-    "match_id": 15129444,
-    "team": "Sunderland",
-    "opponent": "Burnley",
     "player": "Habib Diarra",
     "x": 0.601,
     "y": 0.13,
@@ -38387,19 +38374,6 @@
     "xgot": 0,
     "result": "miss",
     "minute": 90
-  },
-  {
-    "match_id": 14025206,
-    "team": "Aston Villa",
-    "opponent": "Brighton & Hove Albion",
-    "player": "Jack Hinshelwood",
-    "x": 0.528,
-    "y": 0.055,
-    "shotType": "goal",
-    "xg": 0,
-    "xgot": 0,
-    "result": "Goal",
-    "minute": 86
   },
   {
     "match_id": 14025206,
@@ -63896,19 +63870,6 @@
   },
   {
     "match_id": 14025183,
-    "team": "Arsenal",
-    "opponent": "Wolverhampton",
-    "player": "Yerson Mosquera",
-    "x": 0.509,
-    "y": 0.076,
-    "shotType": "goal",
-    "xg": 0,
-    "xgot": 0,
-    "result": "Goal",
-    "minute": 90
-  },
-  {
-    "match_id": 14025183,
     "team": "Wolverhampton",
     "opponent": "Arsenal",
     "player": "Tolu Arokodare",
@@ -64491,19 +64452,6 @@
     "xgot": 0,
     "result": "block",
     "minute": 24
-  },
-  {
-    "match_id": 14025210,
-    "team": "Aston Villa",
-    "opponent": "West Ham United",
-    "player": "Konstantinos Mavropanos",
-    "x": 0.46399999999999997,
-    "y": 0.924,
-    "shotType": "goal",
-    "xg": 0,
-    "xgot": 0,
-    "result": "Goal",
-    "minute": 9
   },
   {
     "match_id": 14025210,
@@ -75923,19 +75871,6 @@
     "match_id": 14025135,
     "team": "Manchester City",
     "opponent": "Fulham",
-    "player": "Sander Berge",
-    "x": 0.6439999999999999,
-    "y": 0.874,
-    "shotType": "goal",
-    "xg": 0,
-    "xgot": 0,
-    "result": "Goal",
-    "minute": 54
-  },
-  {
-    "match_id": 14025135,
-    "team": "Manchester City",
-    "opponent": "Fulham",
     "player": "J\u00e9r\u00e9my Doku",
     "x": 0.685,
     "y": 0.88,
@@ -78037,19 +77972,6 @@
     "xgot": 0,
     "result": "block",
     "minute": 88
-  },
-  {
-    "match_id": 14025147,
-    "team": "Liverpool FC",
-    "opponent": "Sunderland",
-    "player": "Nordi Mukiele",
-    "x": 0.532,
-    "y": 0.11800000000000001,
-    "shotType": "goal",
-    "xg": 0,
-    "xgot": 0,
-    "result": "Goal",
-    "minute": 81
   },
   {
     "match_id": 14025147,
@@ -112032,19 +111954,6 @@
     "xgot": 0,
     "result": "miss",
     "minute": 61
-  },
-  {
-    "match_id": 14025080,
-    "team": "Manchester United",
-    "opponent": "Fulham",
-    "player": "Rodrigo Muniz",
-    "x": 0.546,
-    "y": 0.967,
-    "shotType": "goal",
-    "xg": 0,
-    "xgot": 0,
-    "result": "Goal",
-    "minute": 58
   },
   {
     "match_id": 14025080,
